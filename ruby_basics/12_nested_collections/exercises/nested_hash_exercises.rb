@@ -39,9 +39,17 @@ def delete_language(languages, language_name)
 end
 
 def find_beautiful_languages(languages)
-  # Take languages and return a hash containing only languages which have the
+  # Take languages and 
+  #return a hash containing only languages which have the
   # key/value pair { is_beautiful?: true } listed in their information
-  
+  hash = {}
+  languages.each do |language, info|
+    if info[:is_beautiful?] == true
+      hash[language] = info
+    end
+  end
+
+  hash
 end
 
 def find_language_facts(languages, language_name, fact_index = 0)
@@ -60,4 +68,22 @@ def find_language_facts(languages, language_name, fact_index = 0)
   #                 initial_release: 'December 4, 1995',
   #                 is_beautiful?: false }
   # }
+    # Take languages (now with additional facts added to each language with the
+    # key :facts and value of an array of strings) and return the fact
+    # language_name has at fact_index of its facts array, or at index 0 if this
+    # argument is not given
+  
+    # Loop through each language in the hash
+    languages.each do |language, data|
+      if language == language_name
+        facts = data[:facts]
+        if facts
+          selected_fact = facts[fact_index] || facts[0]
+          return selected_fact
+        end
+      end
+    end
+  
+    return nil
+  
 end
